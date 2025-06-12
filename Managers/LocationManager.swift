@@ -9,6 +9,7 @@ import Foundation
 import CoreLocation
 
 class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
+    
     private let manager = CLLocationManager()
     @Published var currentLocation: CLLocationCoordinate2D?
 

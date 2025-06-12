@@ -149,7 +149,7 @@ extension Earthquake {
             ),
             earthquakeMagnitude: EarthquakeMagnitude(
                 magnitudeType: "芮氏規模",
-                magnitudeValue: 4.7
+                magnitudeValue: 2.0
             )
         ),
         intensity: Intensity(
@@ -157,7 +157,7 @@ extension Earthquake {
                 ShakingArea(
                     areaDesc: "台中市地區",
                     countyName: "台中市",
-                    areaIntensity: "4級",
+                    areaIntensity: "二級",
                     eqStation: []
                 )
             ]

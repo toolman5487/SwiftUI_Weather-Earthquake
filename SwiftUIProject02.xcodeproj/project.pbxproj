@@ -19,6 +19,7 @@
 		15B1A4C52DFAC20D00BF935D /* EmergencyHelpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B1A4C42DFAC20D00BF935D /* EmergencyHelpView.swift */; };
 		15B1A4C82DFAC7E400BF935D /* InfoRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B1A4C72DFAC7E400BF935D /* InfoRowView.swift */; };
 		15B1A4CB2DFAD56600BF935D /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B1A4CA2DFAD56600BF935D /* LocationManager.swift */; };
+		15B1A4CD2DFB062100BF935D /*  StubEarthquakeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B1A4CC2DFB062100BF935D /*  StubEarthquakeService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +36,7 @@
 		15B1A4C42DFAC20D00BF935D /* EmergencyHelpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmergencyHelpView.swift; sourceTree = "<group>"; };
 		15B1A4C72DFAC7E400BF935D /* InfoRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoRowView.swift; sourceTree = "<group>"; };
 		15B1A4CA2DFAD56600BF935D /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		15B1A4CC2DFB062100BF935D /*  StubEarthquakeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = " StubEarthquakeService.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -138,6 +140,7 @@
 			isa = PBXGroup;
 			children = (
 				15B1A4A12DFA82C600BF935D /* EarthquakeService.swift */,
+				15B1A4CC2DFB062100BF935D /*  StubEarthquakeService.swift */,
 			);
 			path = EarthquakeService;
 			sourceTree = "<group>";
@@ -295,6 +298,7 @@
 				15B1A4A72DFA936900BF935D /* WeatherView.swift in Sources */,
 				15B1A4C82DFAC7E400BF935D /* InfoRowView.swift in Sources */,
 				15B1A4B02DFAB3E700BF935D /* EarthquakeCardView.swift in Sources */,
+				15B1A4CD2DFB062100BF935D /*  StubEarthquakeService.swift in Sources */,
 				15B1A4A92DFA939300BF935D /* EarthquakeHomeView.swift in Sources */,
 				15B1A4BE2DFAB92000BF935D /* RecentEarthquakeListView.swift in Sources */,
 				15B1A4C52DFAC20D00BF935D /* EmergencyHelpView.swift in Sources */,

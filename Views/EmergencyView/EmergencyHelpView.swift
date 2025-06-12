@@ -31,19 +31,26 @@ struct EmergencyHelpView: View {
                     annotationItems: [location]) { coord in
                     MapMarker(coordinate: coord, tint: .red)
                 }
-                    .frame(width: .infinity, height: 220)
+                    .frame(width: .infinity, height: 240)
                     .cornerRadius(18)
                     .padding()
                     .onAppear { updateRegion(location) }
                     .onChange(of: location) { updateRegion($0) }
             } else {
                 Image(systemName: "location.slash.circle")
-                    .font(.system(size:60))
+                    .resizable()
+                    .scaledToFit()
+                    .padding()
+                    .frame(maxWidth: .infinity, minHeight: 240)
                     .foregroundColor(.secondary)
-                    .frame(width: 60, height: 60)
-                    .offset(x: isBouncing ? -2 : 0)
-                    .animation(.easeInOut(duration: 0.6).repeatForever(autoreverses: true), value: isBouncing)
+                    .scaleEffect(isBouncing ? 0.5 : 0.2)
+                    .animation(.easeInOut(duration: 1).repeatForever(autoreverses: true), value: isBouncing)
                     .onAppear { isBouncing = true }
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 18)
+                            .stroke(Color.secondary, lineWidth: 5)
+                    )
+                    .cornerRadius(20)
             }
             
             List {
@@ -80,5 +87,3 @@ struct EmergencyHelpView: View {
 #Preview {
     EmergencyHelpView()
 }
-
-
