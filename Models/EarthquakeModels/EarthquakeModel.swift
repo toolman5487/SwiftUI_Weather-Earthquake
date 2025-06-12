@@ -9,11 +9,18 @@ import Foundation
 
 struct EarthquakeData: Codable {
     let success: String
-    let result: Result
+    let result: ResultInfo
     let records: Records
 }
 
-// MARK: - Records
+struct ResultInfo: Codable {
+    let resourceID: String
+
+    enum CodingKeys: String, CodingKey {
+        case resourceID = "resource_id"
+    }
+}
+
 struct Records: Codable {
     let datasetDescription: String
     let earthquake: [Earthquake]
@@ -24,24 +31,25 @@ struct Records: Codable {
     }
 }
 
-// MARK: - Earthquake
-struct Earthquake: Codable {
+struct Earthquake: Identifiable, Codable {
     let earthquakeNo: Int
-    let reportType, reportColor, reportContent: String
-    let reportImageURI: String
-    let reportRemark: String
-    let web: String
-    let shakemapImageURI: String
+    let reportType: String
+    let reportContent: String
+    let reportColor: String
+    let reportImageURI: String?
+    let web: String?
+    let shakemapImageURI: String?
     let earthquakeInfo: EarthquakeInfo
     let intensity: Intensity
+
+    var id: Int { earthquakeNo }
 
     enum CodingKeys: String, CodingKey {
         case earthquakeNo = "EarthquakeNo"
         case reportType = "ReportType"
-        case reportColor = "ReportColor"
         case reportContent = "ReportContent"
+        case reportColor = "ReportColor"
         case reportImageURI = "ReportImageURI"
-        case reportRemark = "ReportRemark"
         case web = "Web"
         case shakemapImageURI = "ShakemapImageURI"
         case earthquakeInfo = "EarthquakeInfo"
@@ -49,9 +57,9 @@ struct Earthquake: Codable {
     }
 }
 
-// MARK: - EarthquakeInfo
 struct EarthquakeInfo: Codable {
-    let originTime, source: String
+    let originTime: String
+    let source: String
     let focalDepth: Double
     let epicenter: Epicenter
     let earthquakeMagnitude: EarthquakeMagnitude
@@ -65,21 +73,10 @@ struct EarthquakeInfo: Codable {
     }
 }
 
-// MARK: - EarthquakeMagnitude
-struct EarthquakeMagnitude: Codable {
-    let magnitudeType: String
-    let magnitudeValue: Int
-
-    enum CodingKeys: String, CodingKey {
-        case magnitudeType = "MagnitudeType"
-        case magnitudeValue = "MagnitudeValue"
-    }
-}
-
-// MARK: - Epicenter
 struct Epicenter: Codable {
     let location: String
-    let epicenterLatitude, epicenterLongitude: Double
+    let epicenterLatitude: Double
+    let epicenterLongitude: Double
 
     enum CodingKeys: String, CodingKey {
         case location = "Location"
@@ -88,7 +85,16 @@ struct Epicenter: Codable {
     }
 }
 
-// MARK: - Intensity
+struct EarthquakeMagnitude: Codable {
+    let magnitudeType: String
+    let magnitudeValue: Double
+
+    enum CodingKeys: String, CodingKey {
+        case magnitudeType = "MagnitudeType"
+        case magnitudeValue = "MagnitudeValue"
+    }
+}
+
 struct Intensity: Codable {
     let shakingArea: [ShakingArea]
 
@@ -97,97 +103,64 @@ struct Intensity: Codable {
     }
 }
 
-// MARK: - ShakingArea
 struct ShakingArea: Codable {
-    let areaDesc, countyName: String
-    let infoStatus: InfoStatus?
-    let areaIntensity: AreaIntensityEnum
+    let areaDesc: String
+    let countyName: String
+    let areaIntensity: String
     let eqStation: [EqStation]
 
     enum CodingKeys: String, CodingKey {
         case areaDesc = "AreaDesc"
         case countyName = "CountyName"
-        case infoStatus = "InfoStatus"
         case areaIntensity = "AreaIntensity"
         case eqStation = "EqStation"
     }
 }
 
-enum AreaIntensityEnum: String, Codable {
-    case the1級 = "1級"
-    case the2級 = "2級"
-    case the3級 = "3級"
-    case the4級 = "4級"
-}
-
-// MARK: - EqStation
 struct EqStation: Codable {
-    let pga, pgv: PGA?
-    let stationName, stationID: String
-    let infoStatus: InfoStatus?
-    let backAzimuth, epicenterDistance: Double
-    let seismicIntensity: AreaIntensityEnum
-    let stationLatitude, stationLongitude: Double
-    let waveImageURI: String?
+    let stationName: String
+    let stationID: String
+    let seismicIntensity: String
 
     enum CodingKeys: String, CodingKey {
-        case pga, pgv
         case stationName = "StationName"
         case stationID = "StationID"
-        case infoStatus = "InfoStatus"
-        case backAzimuth = "BackAzimuth"
-        case epicenterDistance = "EpicenterDistance"
         case seismicIntensity = "SeismicIntensity"
-        case stationLatitude = "StationLatitude"
-        case stationLongitude = "StationLongitude"
-        case waveImageURI = "WaveImageURI"
     }
 }
 
-enum InfoStatus: String, Codable {
-    case observe = "observe"
+extension Earthquake {
+    static let mock = Earthquake(
+        earthquakeNo: 99999,
+        reportType: "地震報告",
+        reportContent: "這是範例內容",
+        reportColor: "紅色",
+        reportImageURI: nil,
+        web: nil,
+        shakemapImageURI: nil,
+        earthquakeInfo: EarthquakeInfo(
+            originTime: "2025-06-12 11:02",
+            source: "中央氣象署",
+            focalDepth: 10,
+            epicenter: Epicenter(
+                location: "台中市西區",
+                epicenterLatitude: 24.15,
+                epicenterLongitude: 120.67
+            ),
+            earthquakeMagnitude: EarthquakeMagnitude(
+                magnitudeType: "芮氏規模",
+                magnitudeValue: 4.7
+            )
+        ),
+        intensity: Intensity(
+            shakingArea: [
+                ShakingArea(
+                    areaDesc: "台中市地區",
+                    countyName: "台中市",
+                    areaIntensity: "4級",
+                    eqStation: []
+                )
+            ]
+        )
+    )
 }
-
-// MARK: - PGA
-struct PGA: Codable {
-    let unit: Unit
-    let ewComponent, nsComponent, vComponent, intScaleValue: Double
-
-    enum CodingKeys: String, CodingKey {
-        case unit
-        case ewComponent = "EWComponent"
-        case nsComponent = "NSComponent"
-        case vComponent = "VComponent"
-        case intScaleValue = "IntScaleValue"
-    }
-}
-
-enum Unit: String, Codable {
-    case gal = "gal"
-    case kine = "kine"
-}
-
-// MARK: - Result
-struct Result: Codable {
-    let resourceID: String
-    let fields: [Field]
-
-    enum CodingKeys: String, CodingKey {
-        case resourceID = "resource_id"
-        case fields
-    }
-}
-
-// MARK: - Field
-struct Field: Codable {
-    let id: String
-    let type: TypeEnum
-}
-
-enum TypeEnum: String, Codable {
-    case float = "Float"
-    case integer = "Integer"
-    case string = "String"
-    case timestamp = "Timestamp"
-}
-

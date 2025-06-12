@@ -12,6 +12,7 @@ struct SwiftUIProject02App: App {
     var body: some Scene {
         WindowGroup {
             TabMainView()
+                .environment(\.colorScheme, .dark)
         }
     }
 }

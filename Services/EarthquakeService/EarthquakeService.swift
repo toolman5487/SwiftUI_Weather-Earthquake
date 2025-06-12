@@ -12,7 +12,9 @@ protocol EarthquakeServiceProtocol {
     func fetchEarthquakes() -> AnyPublisher<[Earthquake], Error>
 }
 
-class EarthquakeService:EarthquakeServiceProtocol {
+class EarthquakeService: EarthquakeServiceProtocol {
+    
+    var lastRawData: String?
     
     func fetchEarthquakes() -> AnyPublisher<[Earthquake], Error> {
         let apiKey = Bundle.main.infoDictionary?["CWBApiKey"] as? String ?? ""
@@ -21,9 +23,23 @@ class EarthquakeService:EarthquakeServiceProtocol {
             return Fail(error: URLError(.badURL)).eraseToAnyPublisher()
         }
         return URLSession.shared.dataTaskPublisher(for: url)
-            .map(\.data)
-            .decode(type: EarthquakeData.self, decoder: JSONDecoder())
-            .map { $0.records.earthquake }
+            .handleEvents(receiveOutput: { output in
+                self.lastRawData = String(data: output.data, encoding: .utf8)
+                print("DEBUG: 取得原始 JSON：\n\(self.lastRawData ?? "")")
+            })
+            .tryMap { data, _ in
+                do {
+                    let decoded = try JSONDecoder().decode(EarthquakeData.self, from: data)
+                    return decoded.records.earthquake
+                } catch {
+                    print("解碼失敗！型別：EarthquakeData")
+                    print("錯誤內容：\(error)")
+                    if let raw = String(data: data, encoding: .utf8) {
+                        print("原始 JSON：\n\(raw)")
+                    }
+                    throw error 
+                }
+            }
             .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
     }
