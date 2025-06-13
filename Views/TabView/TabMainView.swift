@@ -15,7 +15,7 @@ struct TabMainView: View {
                     Image(systemName: "waveform.path.ecg")
                     Text("地震")
                 }
-            WeatherView()
+            WeatherHomeView()
                 .tabItem {
                     Image(systemName: "cloud.sun.fill")
                     Text("天氣")

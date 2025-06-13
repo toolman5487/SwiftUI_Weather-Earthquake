@@ -25,17 +25,16 @@ class EarthquakeService: EarthquakeServiceProtocol {
         return URLSession.shared.dataTaskPublisher(for: url)
             .handleEvents(receiveOutput: { output in
                 self.lastRawData = String(data: output.data, encoding: .utf8)
-                print("DEBUG: 取得原始 JSON：\n\(self.lastRawData ?? "")")
+//                print("DEBUG: Origin JSON：\n\(self.lastRawData ?? "")")
             })
             .tryMap { data, _ in
                 do {
                     let decoded = try JSONDecoder().decode(EarthquakeData.self, from: data)
                     return decoded.records.earthquake
                 } catch {
-                    print("解碼失敗！型別：EarthquakeData")
-                    print("錯誤內容：\(error)")
+                    print("Error：\(error)")
                     if let raw = String(data: data, encoding: .utf8) {
-                        print("原始 JSON：\n\(raw)")
+                        print("Origin JSON：\n\(raw)")
                     }
                     throw error 
                 }

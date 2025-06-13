@@ -16,13 +16,11 @@ struct EarthquakeHomeView: View {
     var body: some View {
         NavigationView {
             VStack(spacing: 24) {
-                if let eq = eqViewModel.latestMagnitudeAboveThree {
+                if let eq = eqViewModel.latestStrongIntensityEarthquake {
                     NavigationLink(destination: EmergencyHelpView()) {
-                           EarthquakeCardView(earthquake: eq)
-                       }
+                        EarthquakeCardView(earthquake: eq)
+                    }
                 }
-                
-               
                 RecentEarthquakeListView(eqViewModel: eqViewModel)
             }
             .navigationTitle("地震警報")
@@ -33,7 +31,12 @@ struct EarthquakeHomeView: View {
                     showAlarmAlert = true
                 }
             }
-            
+            .alert("警報！有感地震", isPresented: $showAlarmAlert) {
+                Button("確定") {
+                    showAlarmAlert = false
+                    eqViewModel.isAlarmActive = false
+                }
+            }
         }
     }
 }
