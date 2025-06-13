@@ -14,11 +14,9 @@ import AudioToolbox
 @MainActor
 class EarthquakeViewModel: ObservableObject {
     
-    private var cancellables = Set<AnyCancellable>()
-    private let service: EarthquakeServiceProtocol
-    private let impactGenerator = UIImpactFeedbackGenerator(style: .medium)
     @Published var earthquakes: [Earthquake] = []
     @Published var errorMessage: String?
+    @Published var isAlarmActive: Bool = false
     @Published var lastFlashedEarthquakeNo: Int? {
         didSet {
             if let no = lastFlashedEarthquakeNo {
@@ -26,7 +24,9 @@ class EarthquakeViewModel: ObservableObject {
             }
         }
     }
-    @Published var isAlarmActive: Bool = false
+    private var cancellables = Set<AnyCancellable>()
+    private let service: EarthquakeServiceProtocol
+    private let impactGenerator = UIImpactFeedbackGenerator(style: .medium)
     
     init(service: EarthquakeServiceProtocol = EarthquakeService()) {
         self.service = service
@@ -35,7 +35,6 @@ class EarthquakeViewModel: ObservableObject {
     }
     
     func fetchEarthquakeReport() {
-        print("Before assignment, lastFlashedEarthquakeNo: \(String(describing: lastFlashedEarthquakeNo))")
         service.fetchEarthquakes()
             .sink(receiveCompletion: { completion in
                 switch completion {
@@ -69,12 +68,9 @@ class EarthquakeViewModel: ObservableObject {
                         self.lastFlashedEarthquakeNo = latest.earthquakeNo
                     }
                 }
-                
-                print("fetch \(earthquakes.count) data")
                 if earthquakes.isEmpty {
                     print("earthquakes isEmpty")
                 } else if let first = earthquakes.first {
-                    print("first earthquake：\(first)")
                 }
             })
             .store(in: &cancellables)

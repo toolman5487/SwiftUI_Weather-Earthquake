@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		153F765A2DFBF2D500801976 /* WeatherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153F76592DFBF2D500801976 /* WeatherModel.swift */; };
+		153F765D2DFBF7A800801976 /* WeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153F765C2DFBF7A800801976 /* WeatherService.swift */; };
+		153F765F2DFC062C00801976 /* WeatherViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153F765E2DFC062C00801976 /* WeatherViewModel.swift */; };
 		15B1A49A2DFA7DE400BF935D /* EarthquakeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B1A4992DFA7DE400BF935D /* EarthquakeModel.swift */; };
 		15B1A4A22DFA82C600BF935D /* EarthquakeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B1A4A12DFA82C600BF935D /* EarthquakeService.swift */; };
 		15B1A4A52DFA83F500BF935D /* EarthquakeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B1A4A42DFA83F500BF935D /* EarthquakeViewModel.swift */; };
@@ -23,6 +26,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		153F76592DFBF2D500801976 /* WeatherModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherModel.swift; sourceTree = "<group>"; };
+		153F765C2DFBF7A800801976 /* WeatherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherService.swift; sourceTree = "<group>"; };
+		153F765E2DFC062C00801976 /* WeatherViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewModel.swift; sourceTree = "<group>"; };
 		15B1A4872DFA7A3200BF935D /* SwiftUIProject02.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftUIProject02.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		15B1A4992DFA7DE400BF935D /* EarthquakeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EarthquakeModel.swift; sourceTree = "<group>"; };
 		15B1A4A12DFA82C600BF935D /* EarthquakeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EarthquakeService.swift; sourceTree = "<group>"; };
@@ -71,6 +77,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		153F76572DFBF2B400801976 /* WeatherVM */ = {
+			isa = PBXGroup;
+			children = (
+				153F765E2DFC062C00801976 /* WeatherViewModel.swift */,
+			);
+			path = WeatherVM;
+			sourceTree = "<group>";
+		};
+		153F76582DFBF2C000801976 /* WeatherModels */ = {
+			isa = PBXGroup;
+			children = (
+				153F76592DFBF2D500801976 /* WeatherModel.swift */,
+			);
+			path = WeatherModels;
+			sourceTree = "<group>";
+		};
+		153F765B2DFBF79300801976 /* WeatherServices */ = {
+			isa = PBXGroup;
+			children = (
+				153F765C2DFBF7A800801976 /* WeatherService.swift */,
+			);
+			path = WeatherServices;
+			sourceTree = "<group>";
+		};
 		15B1A47E2DFA7A3200BF935D = {
 			isa = PBXGroup;
 			children = (
@@ -95,6 +125,7 @@
 		15B1A4972DFA7DAF00BF935D /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				153F76582DFBF2C000801976 /* WeatherModels */,
 				15B1A4982DFA7DBC00BF935D /* EarthquakeModels */,
 			);
 			path = Models;
@@ -111,6 +142,7 @@
 		15B1A49B2DFA7E5700BF935D /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				153F765B2DFBF79300801976 /* WeatherServices */,
 				15B1A4A02DFA828C00BF935D /* EarthquakeService */,
 			);
 			path = Services;
@@ -119,6 +151,7 @@
 		15B1A49C2DFA7E5D00BF935D /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				153F76572DFBF2B400801976 /* WeatherVM */,
 				15B1A4A32DFA83DC00BF935D /* EarthquakeVM */,
 			);
 			path = ViewModels;
@@ -294,15 +327,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				153F765D2DFBF7A800801976 /* WeatherService.swift in Sources */,
 				15B1A4A22DFA82C600BF935D /* EarthquakeService.swift in Sources */,
 				15B1A4A72DFA936900BF935D /* WeatherView.swift in Sources */,
 				15B1A4C82DFAC7E400BF935D /* InfoRowView.swift in Sources */,
 				15B1A4B02DFAB3E700BF935D /* EarthquakeCardView.swift in Sources */,
+				153F765A2DFBF2D500801976 /* WeatherModel.swift in Sources */,
 				15B1A4CD2DFB062100BF935D /*  StubEarthquakeService.swift in Sources */,
 				15B1A4A92DFA939300BF935D /* EarthquakeHomeView.swift in Sources */,
 				15B1A4BE2DFAB92000BF935D /* RecentEarthquakeListView.swift in Sources */,
 				15B1A4C52DFAC20D00BF935D /* EmergencyHelpView.swift in Sources */,
 				15B1A4C22DFAC18100BF935D /* EarthquakeDetailView.swift in Sources */,
+				153F765F2DFC062C00801976 /* WeatherViewModel.swift in Sources */,
 				15B1A4A52DFA83F500BF935D /* EarthquakeViewModel.swift in Sources */,
 				15B1A4AB2DFA94F500BF935D /* TabMainView.swift in Sources */,
 				15B1A49A2DFA7DE400BF935D /* EarthquakeModel.swift in Sources */,

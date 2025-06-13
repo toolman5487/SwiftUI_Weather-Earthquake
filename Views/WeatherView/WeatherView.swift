@@ -7,81 +7,53 @@
 
 import SwiftUI
 
-struct WeatherDay: Identifiable {
-    let id = UUID()
-    let date: String
-    let iconName: String
-    let maxTemp: Int
-    let minTemp: Int
-}
-
 struct WeatherHomeView: View {
-    let forecastDays: [WeatherDay] = [
-        WeatherDay(date: "週一", iconName: "cloud.sun.fill", maxTemp: 30, minTemp: 22),
-        WeatherDay(date: "週二", iconName: "cloud.rain.fill", maxTemp: 27, minTemp: 20),
-        WeatherDay(date: "週三", iconName: "sun.max.fill", maxTemp: 32, minTemp: 24),
-        WeatherDay(date: "週四", iconName: "cloud.bolt.fill", maxTemp: 28, minTemp: 21),
-        WeatherDay(date: "週五", iconName: "cloud.sun.rain.fill", maxTemp: 29, minTemp: 23),
-    ]
+    
+    @StateObject var locationManager = LocationManager()
+    @StateObject var weatherVM = WeatherViewModel()
+    
     var body: some View {
-        NavigationView {
-            VStack(spacing: 24) {
-                VStack {
-                    Text("台北市")
-                        .font(.title)
-                        .bold()
-                    Image(systemName: "sun.max.fill")
-                        .font(.system(size: 72))
-                        .foregroundColor(.yellow)
-                    Text("28°C")
-                        .font(.system(size: 64))
-                        .bold()
-                    HStack(spacing: 20) {
-                        VStack {
-                            Text("濕度")
-                            Text("60%")
-                        }
-                        VStack {
-                            Text("風速")
-                            Text("10 km/h")
-                        }
-                        VStack {
-                            Text("降雨率")
-                            Text("10%")
+        NavigationView{
+            VStack {
+                if let location = weatherVM.weatherForCurrentCity(locationManager.cityName) {
+                    Text("\(location.locationName)")
+                        .font(.largeTitle)
+                        .fontWeight(.heavy)
+                    if let wx = location.weatherElement.first(where: { $0.elementName == "Wx" }) {
+                        if let time = wx.currentTimeEntry() ?? wx.time.first {
+                            let weatherDescription = time.parameter.parameterName
+                            let systemImageName = weatherDescription.weatherSystemImageName()
+                            Image(systemName: systemImageName)
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 100, height: 100)
+                            
+                            Text(weatherDescription)
+                                .foregroundColor(Color.secondary)
                         }
                     }
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
+                } else {
+                    Text("找不到該地點天氣")
                 }
-                
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 16) {
-                        ForEach(forecastDays) { day in
-                            VStack {
-                                Text(day.date)
-                                Image(systemName: day.iconName)
-                                    .font(.title)
-                                Text("\(day.maxTemp)° / \(day.minTemp)°")
-                            }
-                            .padding()
-                            .background(RoundedRectangle(cornerRadius: 12).fill(Color(.secondarySystemBackground)))
+                ScrollView(.horizontal) {
+                    HStack {
+                        ForEach(weatherVM.locations, id: \.locationName) { location in
+                            Text(location.locationName)
+                                .padding(4)
+                                .background(Color(uiColor: .secondarySystemBackground))
+                                .cornerRadius(4)
                         }
                     }
-                    .padding(.horizontal)
                 }
+                .frame(height: 40)
+                .padding()
                 Spacer()
             }
-            .navigationTitle("天氣")
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        print("信標按鈕點擊")
-                    } label: {
-                        Image(systemName: "location.fill")
-                            .foregroundColor(Color(uiColor: .label))
-                    }
-                }
-            }
+            .navigationTitle("天氣預報")
+        }
+        .onAppear {
+            locationManager.requestLocation()
+            weatherVM.fetchWeather()
         }
     }
 }

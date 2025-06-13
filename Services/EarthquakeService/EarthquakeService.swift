@@ -25,7 +25,6 @@ class EarthquakeService: EarthquakeServiceProtocol {
         return URLSession.shared.dataTaskPublisher(for: url)
             .handleEvents(receiveOutput: { output in
                 self.lastRawData = String(data: output.data, encoding: .utf8)
-//                print("DEBUG: Origin JSON：\n\(self.lastRawData ?? "")")
             })
             .tryMap { data, _ in
                 do {
@@ -34,7 +33,6 @@ class EarthquakeService: EarthquakeServiceProtocol {
                 } catch {
                     print("Error：\(error)")
                     if let raw = String(data: data, encoding: .utf8) {
-                        print("Origin JSON：\n\(raw)")
                     }
                     throw error 
                 }
