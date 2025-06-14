@@ -11,45 +11,44 @@ struct WeatherHomeView: View {
     
     @StateObject var locationManager = LocationManager()
     @StateObject var weatherVM = WeatherViewModel()
+    @State private var shake = false
     
     var body: some View {
         NavigationView{
-            VStack {
+            VStack{
                 if let location = weatherVM.weatherForCurrentCity(locationManager.cityName) {
-                    Text("\(location.locationName)")
-                        .font(.largeTitle)
-                        .fontWeight(.heavy)
-                    if let wx = location.weatherElement.first(where: { $0.elementName == "Wx" }) {
-                        if let time = wx.currentTimeEntry() ?? wx.time.first {
-                            let weatherDescription = time.parameter.parameterName
-                            let systemImageName = weatherDescription.weatherSystemImageName()
-                            Image(systemName: systemImageName)
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 100, height: 100)
-                            
-                            Text(weatherDescription)
-                                .foregroundColor(Color.secondary)
-                        }
-                    }
+                    TodayWeatherView(location: location)
                 } else {
-                    Text("找不到該地點天氣")
+                    LoadingLocationView()
                 }
                 ScrollView(.horizontal) {
                     HStack {
                         ForEach(weatherVM.locations, id: \.locationName) { location in
                             Text(location.locationName)
-                                .padding(4)
+                                .padding(.horizontal, 12)
+                                .padding(.vertical, 8)
                                 .background(Color(uiColor: .secondarySystemBackground))
-                                .cornerRadius(4)
+                                .cornerRadius(20)
                         }
                     }
                 }
                 .frame(height: 40)
-                .padding()
+                
                 Spacer()
             }
             .navigationTitle("天氣預報")
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button(action: {
+                        print("Location Top")
+                        locationManager.requestLocation()
+                    }) {
+                        Image(systemName: locationManager.cityName == nil ? "location.slash.fill" : "location.fill")
+                            .imageScale(.large)
+                            .foregroundColor(Color.primary)
+                    }
+                }
+            }
         }
         .onAppear {
             locationManager.requestLocation()
