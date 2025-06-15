@@ -53,6 +53,12 @@ class WeatherViewModel: ObservableObject {
         }
         return wx.time
     }
+    
+    func temperatureForTime(_ time: Time, in location: Location) -> (min: String?, max: String?) {
+        let minT = location.weatherElement.first(where: { $0.elementName == "MinT" })?.time.first(where: { $0.startTime == time.startTime })?.parameter.parameterName
+        let maxT = location.weatherElement.first(where: { $0.elementName == "MaxT" })?.time.first(where: { $0.startTime == time.startTime })?.parameter.parameterName
+        return (minT, maxT)
+    }
 }
 
 extension WeatherElement {

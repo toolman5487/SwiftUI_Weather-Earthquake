@@ -29,6 +29,7 @@ struct WeatherHomeView: View {
                                 selectedLocationName = location.locationName
                             } label: {
                                 Text(location.locationName)
+                                    .foregroundColor(.primary)
                                     .padding(.horizontal, 12)
                                     .padding(.vertical, 8)
                                     .background(selectedLocationName == location.locationName ? Color.blue.opacity(0.3) : Color(uiColor: .secondarySystemBackground))
@@ -43,13 +44,12 @@ struct WeatherHomeView: View {
                 if let selectedName = selectedLocationName,
                    let location = weatherVM.weatherForCurrentCity(selectedName),
                    let wx = location.weatherElement.first(where: { $0.elementName == "Wx" }) {
-                    
                     List {
                         ForEach(weatherVM.allFutureWeather(for: selectedName), id: \.startTime) { timeEntry in
-                            WeatherTimeRowView(timeEntry: timeEntry)
+                            let temps = weatherVM.temperatureForTime(timeEntry, in: location)
+                            WeatherTimeRowView(timeEntry: timeEntry, minTemp: temps.min, maxTemp: temps.max)
                         }
                     }
-                    .frame(width: .infinity)
                 } else {
                     Spacer()
                     Image(systemName: "arrow.up.circle.fill")

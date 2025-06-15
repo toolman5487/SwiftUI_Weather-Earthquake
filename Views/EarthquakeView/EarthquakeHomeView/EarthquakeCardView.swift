@@ -23,16 +23,18 @@ struct EarthquakeCardView: View {
             Image(systemName: "exclamationmark.triangle.fill")
                 .font(.system(size: 40))
                 .foregroundColor(.red)
-            VStack(alignment: .leading, spacing: 6) {
+            VStack(alignment: .leading, spacing: 8) {
                 Text("速報")
                     .font(.title).bold()
                     .foregroundColor(.primary)
                 Text("\(earthquake.earthquakeInfo.originTime)")
                 
                 Text("\(earthquake.earthquakeInfo.epicenter.location)")
-                    .frame(alignment: .leading)
+                    .frame(maxWidth: .infinity, alignment: .leading)
                     .font(.subheadline)
                     .foregroundColor(.secondary)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.5)
                 HStack {
                     Text("規模 \(earthquake.earthquakeInfo.earthquakeMagnitude.magnitudeValue, specifier: "%.1f")")
                     Text("最大震度 \(maxIntensityArea?.areaIntensity ?? "-")")

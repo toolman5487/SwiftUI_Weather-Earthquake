@@ -11,7 +11,6 @@ import MapKit
 
 struct EmergencyHelpView: View {
     
-    @State private var isBouncing = false
     @StateObject private var locationManager = LocationManager()
     @State private var region = MKCoordinateRegion(
         center: CLLocationCoordinate2D(latitude: 23.5, longitude: 121.0),
@@ -37,20 +36,11 @@ struct EmergencyHelpView: View {
                     .onAppear { updateRegion(location) }
                     .onChange(of: location) { updateRegion($0) }
             } else {
-                Image(systemName: "location.slash.circle")
-                    .resizable()
-                    .scaledToFit()
+                Image(systemName: "wave.3.up")
+                    .font(.system(size: 120))
                     .padding()
-                    .frame(maxWidth: .infinity, minHeight: 240)
+                    .frame(width: .infinity, height: 240)
                     .foregroundColor(.secondary)
-                    .scaleEffect(isBouncing ? 0.5 : 0.2)
-                    .animation(.easeInOut(duration: 1).repeatForever(autoreverses: true), value: isBouncing)
-                    .onAppear { isBouncing = true }
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 18)
-                            .stroke(Color.secondary, lineWidth: 5)
-                    )
-                    .cornerRadius(20)
             }
             
             List {
@@ -62,23 +52,21 @@ struct EmergencyHelpView: View {
             }
             
             Button(action: { locationManager.requestLocation() }) {
-                VStack{
-                    ZStack {
-                        Circle()
-                            .fill(Color.red)
-                            .frame(width: 100, height: 100)
-                            .shadow(color: Color.red.opacity(0.25), radius: 8, x: 0, y: 3)
-                        Image(systemName: "location.fill")
-                            .font(.system(size: 32, weight: .bold))
-                            .foregroundColor(.white)
-                    }
-                }
+                Text("重新定位")
+                    .foregroundColor(.white)
+                    .fontWeight(.semibold)
+                    .frame(height: 44)
+                    .frame(maxWidth: .infinity)
+                    .background(Color.red)
+                    .cornerRadius(22)
+                    .padding(.horizontal)
             }
             .buttonStyle(PlainButtonStyle())
             .padding(.bottom, 40)
+            
+            Spacer()
         }
         .background(Color(.systemGroupedBackground))
-        .ignoresSafeArea(edges: .bottom)
         .navigationTitle("緊急協助")
     }
 }
