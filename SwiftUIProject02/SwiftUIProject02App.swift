@@ -9,11 +9,16 @@ import SwiftUI
 
 @main
 struct SwiftUIProject02App: App {
+    
+    @StateObject private var notificationManager = NotificationManager.shared
+    
     var body: some Scene {
         WindowGroup {
             TabMainView()
                 .environment(\.colorScheme, .dark)
+                .onAppear {
+                    notificationManager.requestAuthorization()
+                }
         }
     }
 }
-

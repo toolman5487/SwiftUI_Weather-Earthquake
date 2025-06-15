@@ -16,6 +16,8 @@
 		153F76762DFDC4BC00801976 /* TodayWeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153F76752DFDC4BC00801976 /* TodayWeatherView.swift */; };
 		153F76782DFDC58D00801976 /* LoadingLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153F76772DFDC58D00801976 /* LoadingLocationView.swift */; };
 		153F767A2DFE9D1300801976 /* WeatherTimeRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153F76792DFE9D1300801976 /* WeatherTimeRowView.swift */; };
+		153F767C2DFEBBFB00801976 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153F767B2DFEBBFB00801976 /* NotificationManager.swift */; };
+		153F767F2DFEBFF800801976 /* MockEarthquakeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153F767E2DFEBFF800801976 /* MockEarthquakeData.swift */; };
 		15B1A49A2DFA7DE400BF935D /* EarthquakeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B1A4992DFA7DE400BF935D /* EarthquakeModel.swift */; };
 		15B1A4A22DFA82C600BF935D /* EarthquakeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B1A4A12DFA82C600BF935D /* EarthquakeService.swift */; };
 		15B1A4A52DFA83F500BF935D /* EarthquakeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B1A4A42DFA83F500BF935D /* EarthquakeViewModel.swift */; };
@@ -40,6 +42,8 @@
 		153F76752DFDC4BC00801976 /* TodayWeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayWeatherView.swift; sourceTree = "<group>"; };
 		153F76772DFDC58D00801976 /* LoadingLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingLocationView.swift; sourceTree = "<group>"; };
 		153F76792DFE9D1300801976 /* WeatherTimeRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherTimeRowView.swift; sourceTree = "<group>"; };
+		153F767B2DFEBBFB00801976 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
+		153F767E2DFEBFF800801976 /* MockEarthquakeData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockEarthquakeData.swift; sourceTree = "<group>"; };
 		15B1A4872DFA7A3200BF935D /* SwiftUIProject02.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftUIProject02.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		15B1A4992DFA7DE400BF935D /* EarthquakeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EarthquakeModel.swift; sourceTree = "<group>"; };
 		15B1A4A12DFA82C600BF935D /* EarthquakeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EarthquakeService.swift; sourceTree = "<group>"; };
@@ -130,9 +134,18 @@
 			path = Animation;
 			sourceTree = "<group>";
 		};
+		153F767D2DFEBFDB00801976 /* TestData */ = {
+			isa = PBXGroup;
+			children = (
+				153F767E2DFEBFF800801976 /* MockEarthquakeData.swift */,
+			);
+			path = TestData;
+			sourceTree = "<group>";
+		};
 		15B1A47E2DFA7A3200BF935D = {
 			isa = PBXGroup;
 			children = (
+				153F767D2DFEBFDB00801976 /* TestData */,
 				153F766C2DFDBFA800801976 /* Animations */,
 				15B1A4C92DFAD55B00BF935D /* Managers */,
 				15B1A49D2DFA7E6400BF935D /* Views */,
@@ -282,6 +295,7 @@
 			isa = PBXGroup;
 			children = (
 				15B1A4CA2DFAD56600BF935D /* LocationManager.swift */,
+				153F767B2DFEBBFB00801976 /* NotificationManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -369,6 +383,8 @@
 				15B1A4A22DFA82C600BF935D /* EarthquakeService.swift in Sources */,
 				15B1A4A72DFA936900BF935D /* WeatherView.swift in Sources */,
 				153F767A2DFE9D1300801976 /* WeatherTimeRowView.swift in Sources */,
+				153F767F2DFEBFF800801976 /* MockEarthquakeData.swift in Sources */,
+				153F767C2DFEBBFB00801976 /* NotificationManager.swift in Sources */,
 				15B1A4C82DFAC7E400BF935D /* InfoRowView.swift in Sources */,
 				15B1A4B02DFAB3E700BF935D /* EarthquakeCardView.swift in Sources */,
 				153F765A2DFBF2D500801976 /* WeatherModel.swift in Sources */,

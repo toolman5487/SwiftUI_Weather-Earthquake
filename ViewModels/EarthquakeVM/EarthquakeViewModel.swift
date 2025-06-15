@@ -14,6 +14,13 @@ import AudioToolbox
 @MainActor
 class EarthquakeViewModel: ObservableObject {
     
+//    // 模擬更新地震資料方法
+//    func loadMockData() {
+//        earthquakes = [MockEarthquakeData.mockEarthquake]
+//    }
+//    // 或用來更新最新地震
+//    @Published var latestEarthquake: Earthquake?
+    
     @Published var earthquakes: [Earthquake] = []
     @Published var errorMessage: String?
     @Published var isAlarmActive: Bool = false
@@ -53,6 +60,7 @@ class EarthquakeViewModel: ObservableObject {
                     }.max() ?? 0
                     
                     if maxIntensity >= 3 && latest.earthquakeNo != self.lastFlashedEarthquakeNo {
+                        
                         self.isAlarmActive = true
                         DispatchQueue.main.async {
                             self.impactGenerator.prepare()
@@ -64,6 +72,11 @@ class EarthquakeViewModel: ObservableObject {
                                     AudioServicesPlaySystemSound(1005)
                                 }
                             }
+                            
+                            NotificationManager.shared.sendEarthquakeNotification(
+                                title: "有感地震警報",
+                                body: "地點：\(latest.earthquakeInfo.epicenter.location)，最大震度：\(maxIntensity)級"
+                            )
                         }
                         self.lastFlashedEarthquakeNo = latest.earthquakeNo
                     }
@@ -75,6 +88,19 @@ class EarthquakeViewModel: ObservableObject {
             })
             .store(in: &cancellables)
     }
+    
+//    func updateLatestWithMock() {
+//           latestEarthquake = MockEarthquakeData.mockEarthquake
+//           
+//           // 假設模擬地震震度是有感（>=3級）
+//           NotificationManager.shared.sendEarthquakeNotification(
+//               title: "有感地震警報（模擬）",
+//               body: "地點：\(latestEarthquake?.earthquakeInfo.epicenter.location ?? "-")，最大震度：4級"
+//           )
+//           
+//           // 同時觸發警報狀態（可選）
+//           isAlarmActive = true
+//       } // MockData
 }
 
 extension EarthquakeViewModel{
