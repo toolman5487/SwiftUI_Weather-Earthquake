@@ -14,7 +14,7 @@ struct LoadingLocationView: View {
             Image(systemName: "location.viewfinder")
                 .resizable()
                 .aspectRatio(contentMode: .fill)
-                .frame(width: 60, height: 60)
+                .frame(width: 100, height: 100)
                 .animation(
                     Animation.linear(duration: 1)
                         .repeatForever(autoreverses: true),
@@ -24,7 +24,7 @@ struct LoadingLocationView: View {
                     shake = true
                 }
             MakeAnimationView(animationName: "loadingPoint")
-                .frame(maxWidth: .infinity, maxHeight: 60)
+                .frame(maxWidth: .infinity, maxHeight: 100)
         }
     }
 }

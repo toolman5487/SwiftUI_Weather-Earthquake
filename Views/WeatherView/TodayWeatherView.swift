@@ -30,7 +30,6 @@ struct TodayWeatherView: View {
                     .foregroundColor(.secondary)
             } else {
                 Text("無今日天氣資料")
-                    .foregroundColor(.red)
             }
         }
         .padding()

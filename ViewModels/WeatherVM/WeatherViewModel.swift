@@ -45,6 +45,14 @@ class WeatherViewModel: ObservableObject {
         guard let cityName = cityName else { return nil }
         return locations.first(where: { $0.locationName == cityName })
     }
+    
+    func allFutureWeather(for cityName: String) -> [Time] {
+        guard let location = locations.first(where: { $0.locationName == cityName }),
+              let wx = location.weatherElement.first(where: { $0.elementName == "Wx" }) else {
+            return []
+        }
+        return wx.time
+    }
 }
 
 extension WeatherElement {

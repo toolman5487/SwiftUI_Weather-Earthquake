@@ -12,6 +12,7 @@ struct WeatherHomeView: View {
     @StateObject var locationManager = LocationManager()
     @StateObject var weatherVM = WeatherViewModel()
     @State private var shake = false
+    @State private var selectedLocationName: String? = nil
     
     var body: some View {
         NavigationView{
@@ -24,17 +25,43 @@ struct WeatherHomeView: View {
                 ScrollView(.horizontal) {
                     HStack {
                         ForEach(weatherVM.locations, id: \.locationName) { location in
-                            Text(location.locationName)
-                                .padding(.horizontal, 12)
-                                .padding(.vertical, 8)
-                                .background(Color(uiColor: .secondarySystemBackground))
-                                .cornerRadius(20)
+                            Button {
+                                selectedLocationName = location.locationName
+                            } label: {
+                                Text(location.locationName)
+                                    .padding(.horizontal, 12)
+                                    .padding(.vertical, 8)
+                                    .background(selectedLocationName == location.locationName ? Color.blue.opacity(0.3) : Color(uiColor: .secondarySystemBackground))
+                                    .cornerRadius(20)
+                            }
                         }
                     }
                 }
                 .frame(height: 40)
+                Divider()
                 
-                Spacer()
+                if let selectedName = selectedLocationName,
+                   let location = weatherVM.weatherForCurrentCity(selectedName),
+                   let wx = location.weatherElement.first(where: { $0.elementName == "Wx" }) {
+                    
+                    List {
+                        ForEach(weatherVM.allFutureWeather(for: selectedName), id: \.startTime) { timeEntry in
+                            WeatherTimeRowView(timeEntry: timeEntry)
+                        }
+                    }
+                    .frame(width: .infinity)
+                } else {
+                    Spacer()
+                    Image(systemName: "arrow.up.circle.fill")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 60, height: 60)
+                        .foregroundColor(.secondary)
+                    Text("請從上方選擇地點")
+                        .foregroundColor(.secondary)
+                        .padding()
+                    Spacer()
+                }
             }
             .navigationTitle("天氣預報")
             .toolbar {
