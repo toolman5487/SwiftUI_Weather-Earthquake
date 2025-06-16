@@ -17,37 +17,35 @@ struct WeatherTimeRowView: View {
         let weatherName = timeEntry.parameter.parameterName
         let imageName = weatherName.weatherSystemImageName()
         
-        VStack{
-            Text("\(timeEntry.startTime) ~ \(timeEntry.endTime)")
-                .frame(alignment: .leading)
-                .font(.caption)
-                .foregroundColor(.secondary)
-                .padding(.vertical)
-            
-            HStack{
-                VStack{
-                    HStack {
-                        Image(systemName: imageName)
-                            .frame(width: 36,height: 36)
-                        Text(weatherName)
-                            .lineLimit(1)
-                            .minimumScaleFactor(0.3)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                        
-                    }
-                }
-                .padding()
-                
-                Spacer()
-                VStack{
-                    if let minTemp = minTemp, let maxTemp = maxTemp {
-                        Text("最低 \(minTemp)℃")
-                        Spacer()
-                        Text("最高 \(maxTemp)℃")
-                    }
-                }
-                .padding(.vertical)
+        HStack{
+            VStack{
+                Text("\(timeEntry.startTime)")
+                Text("|")
+                Text("\(timeEntry.endTime)")
             }
+            .frame(alignment: .leading)
+            .font(.caption)
+            .foregroundColor(.secondary)
+            .padding()
+            
+            VStack{
+                Image(systemName: imageName)
+                    .frame(width: 36,height: 36)
+                Text(weatherName)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.3)
+                    .frame(maxWidth: .infinity)
+            }
+            .padding()
+            
+            VStack(spacing: 12){
+                if let minTemp = minTemp, let maxTemp = maxTemp {
+                    Text("最高 \(maxTemp)℃")
+                    Text("最低 \(minTemp)℃")
+                }
+            }
+            .padding(.vertical)
         }
+        
     }
 }

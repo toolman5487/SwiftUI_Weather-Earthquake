@@ -10,8 +10,7 @@ import Combine
 
 struct StubEarthquakeService: EarthquakeServiceProtocol {
     func fetchEarthquakes() -> AnyPublisher<[Earthquake], Error> {
-        let quake = Earthquake.mock
-        return Just([quake])
+        return Just(Earthquake.mockList)
             .setFailureType(to: Error.self)
             .eraseToAnyPublisher()
     }

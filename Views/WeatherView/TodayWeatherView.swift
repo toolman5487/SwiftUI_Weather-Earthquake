@@ -11,7 +11,7 @@ struct TodayWeatherView: View {
     let location: Location
     
     var body: some View {
-        VStack(spacing: 10) {
+        VStack(spacing: 8) {
             Text(location.locationName)
                 .font(.largeTitle)
                 .fontWeight(.bold)

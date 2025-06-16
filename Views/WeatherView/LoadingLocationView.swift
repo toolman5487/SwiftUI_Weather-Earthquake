@@ -10,7 +10,10 @@ import SwiftUI
 struct LoadingLocationView: View {
     @State private var shake = false
     var body: some View {
-        Group {
+        VStack(spacing: 8) {
+            Text("請開啟定位以取得當前城市天氣")
+                .foregroundColor(.secondary)
+                .font(.headline)
             Image(systemName: "location.viewfinder")
                 .resizable()
                 .aspectRatio(contentMode: .fill)
